@@ -17,24 +17,25 @@ let upload = multer({
 });
 
 const { fileExtract } = require("./controllers/file");
+const { pdfToImages } = require("./util/helper");
 const app = express();
 const port = 4000;
 
 app.use(cors());
-
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application/json
 app.use(bodyParser.json());
-
 app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
 	res.send("Hello World!");
 });
 
-app.post("/tesseractjs", upload.single("file"), fileExtract);
+app.post("/extractText", upload.single("file"), fileExtract);
+
+app.post("/pdf", async (req, res) => {
+	await pdfToImages("./uploads/pdf3page.pdf");
+	res.send("hello world");
+});
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`);

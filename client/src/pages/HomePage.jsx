@@ -6,7 +6,7 @@ export default function HomePage() {
 		console.log("File uploaded", e.target.files[0]);
 		const data = new FormData();
 		data.append("file", e.target.files[0]);
-		await axios.post("http://localhost:4000/tesseractjs", data);
+		await axios.post("http://localhost:4000/extractText", data);
 	};
 	return (
 		<div>
