@@ -2,27 +2,27 @@
 const Tesseract = require("tesseract.js");
 // const imageData = require("../testData/document3.jpeg");
 // import imageData from "../testData/document3.jpeg";
-const fs = require('fs').promises;
+const fs = require("fs").promises;
 
-const readFile = async () => {
-	const data = await fs.readFile("./testData/document3.jpeg");
+const readFile = async (path) => {
+	const data = await fs.readFile(path);
 	return data;
-}
+};
 
-const exportTextFromFile = async () => {
-	const fileData = await readFile();
-	const content = await Tesseract.recognize(
-		fileData,
-		'eng',
-		{ logger: m => {return;} }
-	  );
+const exportTextFromFile = async (path) => {
+	const fileData = await readFile(path);
+	const content = await Tesseract.recognize(fileData, "eng", {
+		logger: (m) => {
+			return;
+		},
+	});
 	console.log("Content : ", content.data.text);
-	  
+
 	//   .then(({ data: { text } }) => {
 	// 	console.log(text);
 	//   })
-}
+};
 
 module.exports = {
-	exportTextFromFile
-}
+	exportTextFromFile,
+};
