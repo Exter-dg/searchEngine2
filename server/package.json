@@ -1,0 +1,26 @@
+{
+  "name": "searchengine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Exter-dg/searchEngine2.git"
+  },
+  "author": "Parth Kapadia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Exter-dg/searchEngine2/issues"
+  },
+  "homepage": "https://github.com/Exter-dg/searchEngine2#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "tesseract.js": "^4.0.2"
+  }
+}

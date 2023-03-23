@@ -1,0 +1,6 @@
+testData
+node_modules
+
+
+# Trained Data
+*.traineddata
