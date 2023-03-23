@@ -2,3 +2,8 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
+.primary-button {
+	background-color: "darkslategray";
+	width: "8rem";
+}
