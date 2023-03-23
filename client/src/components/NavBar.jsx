@@ -19,7 +19,7 @@ export default function NavBar() {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						Search Engine
+						PDF to Text
 					</Typography>
 				</Toolbar>
 			</AppBar>
