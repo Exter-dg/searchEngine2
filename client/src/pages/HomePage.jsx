@@ -6,6 +6,7 @@ export default function HomePage() {
 	const [file, setFile] = useState(undefined);
 	const [fileData, setFileData] = useState([]);
 	const [page, setPage] = useState(0);
+	const [isSearching, setIsSearching] = useState(false);
 
 	const handleChange = (e) => {
 		console.log("File uploaded", e.target.files[0]);
@@ -13,15 +14,15 @@ export default function HomePage() {
 	};
 
 	const handleSubmit = async () => {
-		console.log("Button clicked");
+		setIsSearching(true);
 		const data = new FormData();
 		data.append("file", file);
 		const response = await axios.post(
 			"http://localhost:4000/extractText",
 			data
 		);
-		console.log(response.data);
 		setFileData(response.data);
+		setIsSearching(false);
 	};
 
 	const toggleNextPage = () => {
@@ -53,22 +54,24 @@ export default function HomePage() {
 					<Box sx={{ boxShadow: 3, margin: "1vh" }}>
 						<Box
 							style={{
-								height: "38vh",
+								height: "42vh",
 								overflow: "auto",
 							}}
 							sx={{
-								width: "95%",
+								width: "96%",
 								padding: "3vh",
 							}}>
 							<Typography align="justify">
-								{fileData.length > 0
+								{isSearching
+									? "Extracting..."
+									: fileData.length > 0
 									? fileData[page]
 									: "Upload file to see results"}
 							</Typography>
 						</Box>
 						<Box
 							sx={{
-								padding: "3vh",
+								padding: "1vh",
 							}}
 							display="flex"
 							justifyContent="center"
