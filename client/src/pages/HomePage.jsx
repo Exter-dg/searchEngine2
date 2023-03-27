@@ -1,6 +1,8 @@
 import { Button, Box, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import Lottie from "lottie-react";
+import loadingJson from "../assets/loading2.json";
 
 export default function HomePage() {
 	const [file, setFile] = useState(undefined);
@@ -48,7 +50,7 @@ export default function HomePage() {
 			sx={{ marginTop: "4rem", padding: "3vh" }}>
 			<Grid
 				container
-				style={{ overflow: "auto" }}
+				style={{ overflow: "clip" }}
 				minHeight="40vh"
 				maxHeight="65vh">
 				<Grid item xs={12}>
@@ -56,18 +58,30 @@ export default function HomePage() {
 						<Box
 							style={{
 								height: "42vh",
-								overflow: "auto",
+								overflow: "scroll",
 							}}
 							sx={{
 								width: "96%",
 								padding: "3vh",
 							}}>
 							<Typography align="justify">
-								{isSearching
-									? "Extracting..."
-									: fileData.length > 0
-									? fileData[page]
-									: "Upload file to see results"}
+								{isSearching ? (
+									<Lottie
+										loop
+										animationData={loadingJson}
+										play
+										style={{
+											width: 500,
+											height: 400,
+											marginLeft: "auto",
+											marginRight: "auto",
+										}}
+									/>
+								) : fileData.length > 0 ? (
+									fileData[page]
+								) : (
+									"Upload file to see results"
+								)}
 							</Typography>
 						</Box>
 						<Box

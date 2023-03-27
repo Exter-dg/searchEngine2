@@ -4,7 +4,6 @@ import {
 	Card,
 	CardActionArea,
 	CardContent,
-	Divider,
 	InputAdornment,
 	List,
 	ListItemButton,
@@ -14,24 +13,31 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import axios from "axios";
+import Lottie from "lottie-react";
+import loadingJson from "../assets/loading2.json";
+import noResultsJson1 from "../assets/noResults1.json";
 
 export default function SearchPage() {
 	const [query, setQuery] = useState("");
-	const [debouncedQuery] = useDebounce(query, 500);
+	const [debouncedQuery] = useDebounce(query, 1000);
+	const [isSearching, setIsSearching] = useState(false);
 	const [results, setResults] = useState([]);
 
 	useEffect(() => {
 		console.log(debouncedQuery);
 		async function fetchResults() {
+			setIsSearching(true);
 			const response = await axios.post("http://localhost:4000/searchIndex", {
 				query: debouncedQuery,
 			});
+			setIsSearching(false);
 			setResults(response.data);
 		}
 		fetchResults();
 	}, [debouncedQuery]);
 
 	const handleChange = (e) => {
+		if (e.target.value) setIsSearching(true);
 		setQuery(e.target.value);
 	};
 
@@ -74,42 +80,68 @@ export default function SearchPage() {
 						overflow: "scroll",
 						marginTop: "4vh",
 					}}>
-					<List>
-						{results.map((result) => (
-							<>
-								<ListItemButton sx={{ p: 0 }}>
-									<Card
-										variant="outlined"
-										sx={{
-											width: "100%",
-										}}>
-										<CardActionArea>
-											<CardContent>
-												<Typography
-													sx={{ fontSize: 14 }}
-													align="right"
-													color="text.secondary"
-													gutterBottom>
-													{result.date}
-												</Typography>
-												<Typography variant="h5" component="div" align="left">
-													{result.name}
-												</Typography>
-												<Typography
-													sx={{ mb: 1.5, fontSize: 14 }}
-													color="text.secondary"
-													align="left">
-													Name | Aadhar Number
-												</Typography>
-												<Typography variant="body2" align="left">
-													{result.content}
-												</Typography>
-											</CardContent>
-										</CardActionArea>
-									</Card>
-								</ListItemButton>
-							</>
-						))}
+					<List sx={{ width: "100%" }}>
+						{isSearching ? (
+							<Lottie
+								loop={true}
+								animationData={loadingJson}
+								style={{
+									width: 500,
+									height: 400,
+									marginLeft: "auto",
+									marginRight: "auto",
+								}}
+							/>
+						) : results.length > 0 ? (
+							results.map((result) => (
+								<>
+									<ListItemButton sx={{ p: 0 }}>
+										<Card
+											variant="outlined"
+											sx={{
+												width: "100%",
+											}}>
+											<CardActionArea>
+												<CardContent>
+													<Typography
+														sx={{ fontSize: 14 }}
+														align="right"
+														color="text.secondary"
+														gutterBottom>
+														{result.date}
+													</Typography>
+													<Typography variant="h5" component="div" align="left">
+														{result.name}
+													</Typography>
+													<Typography
+														sx={{ mb: 1.5, fontSize: 14 }}
+														color="text.secondary"
+														align="left">
+														Name | Aadhar Number
+													</Typography>
+													<Typography variant="body2" align="left">
+														{result.content}
+													</Typography>
+												</CardContent>
+											</CardActionArea>
+										</Card>
+									</ListItemButton>
+								</>
+							))
+						) : query.length > 0 ? (
+							<Lottie
+								loop={true}
+								animationData={noResultsJson1}
+								style={{
+									width: 500,
+									height: 400,
+									marginLeft: "auto",
+									marginRight: "auto",
+								}}
+							/>
+						) : (
+							"Type Something..."
+						)}
 					</List>
 				</Box>
 			</Box>
