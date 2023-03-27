@@ -37,7 +37,7 @@ const processPdf = async (path) => {
 	console.log("Data: ", data);
 
 	// Store data in index
-	addToIndex({ id: uuid4(), content: data });
+	addToIndex({ id: uuid4(), content: data.join(" ") });
 
 	return data;
 };

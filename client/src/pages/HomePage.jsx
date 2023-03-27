@@ -22,6 +22,7 @@ export default function HomePage() {
 			data
 		);
 		setFileData(response.data);
+		setPage(0);
 		setIsSearching(false);
 	};
 

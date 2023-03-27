@@ -76,8 +76,9 @@ const searchIndex = async (query) => {
 	// });
 
 	// const searchResults = Promise.all(promises);
-	results = results?.[0]?.result.map((val) => val.doc.content.substr(0, 50));
-	console.log(results);
+	results = results?.[0]?.result?.map((val) => {
+		return val.doc.content.substr(0, 150) + "...";
+	});
 	return results || [];
 };
 

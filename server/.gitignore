@@ -4,3 +4,6 @@ node_modules
 
 # Trained Data
 *.traineddata
+
+# content
+content.json
