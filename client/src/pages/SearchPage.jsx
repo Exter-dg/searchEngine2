@@ -140,7 +140,7 @@ export default function SearchPage() {
 								}}
 							/>
 						) : (
-							"Type Something..."
+							""
 						)}
 					</List>
 				</Box>
