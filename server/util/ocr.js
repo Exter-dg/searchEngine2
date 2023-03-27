@@ -2,6 +2,8 @@ const { createWorker, createScheduler } = require("tesseract.js");
 // Has 2 external Dependencies - graphicsmagick and ghostscript
 const { fromPath } = require("pdf2pic");
 const sharp = require("sharp");
+const uuid4 = require("uuid4");
+const { addToIndex } = require("./search");
 
 const processPdf = async (path) => {
 	let pdfBufArr = await pdfToImages(path);
@@ -22,6 +24,7 @@ const processPdf = async (path) => {
 
 	let data = await Promise.all(result);
 	await terminateTesseractScheduler(scheduler);
+
 	data = data.map((val) => {
 		let text = "";
 		val.data.words.forEach((word) => {
@@ -32,6 +35,10 @@ const processPdf = async (path) => {
 		return text;
 	});
 	console.log("Data: ", data);
+
+	// Store data in index
+	addToIndex({ id: uuid4(), content: data });
+
 	return data;
 };
 
