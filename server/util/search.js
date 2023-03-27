@@ -17,7 +17,7 @@ let index = new Document({
 	document: {
 		id: "id",
 		index: ["content"],
-		store: ["content"],
+		store: ["content", "date", "name"],
 	},
 });
 
@@ -43,7 +43,14 @@ const initializeIndex = async () => {
 	data = JSON.parse(data);
 	const promises = [];
 	data.forEach((doc) => {
-		promises.push(index.addAsync({ id: doc.id, content: doc.content }));
+		promises.push(
+			index.addAsync({
+				id: doc.id,
+				content: doc.content,
+				date: doc.date,
+				name: doc.name,
+			})
+		);
 	});
 	await Promise.all(promises);
 	return index;
@@ -64,8 +71,18 @@ const exportIndex = async () => {
 };
 
 const addToIndex = async (doc) => {
-	await index.addAsync({ id: doc.id, content: doc.content });
-	await writeContentToJson({ id: doc.id, content: doc.content });
+	await index.addAsync({
+		id: doc.id,
+		content: doc.content,
+		date: doc.date,
+		name: doc.name,
+	});
+	await writeContentToJson({
+		id: doc.id,
+		content: doc.content,
+		date: doc.date,
+		name: doc.name,
+	});
 };
 
 const searchIndex = async (query) => {
@@ -77,7 +94,13 @@ const searchIndex = async (query) => {
 
 	// const searchResults = Promise.all(promises);
 	results = results?.[0]?.result?.map((val) => {
-		return val.doc.content.substr(0, 150) + "...";
+		return {
+			content:
+				val.doc.content.substr(0, 600) +
+				(val.doc.content.length > 600 ? "..." : ""),
+			date: val.doc.date,
+			name: val.doc.name,
+		};
 	});
 	return results || [];
 };

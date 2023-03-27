@@ -1,12 +1,15 @@
 import { Search } from "@mui/icons-material";
 import {
 	Box,
+	Card,
+	CardActionArea,
+	CardContent,
 	Divider,
 	InputAdornment,
 	List,
 	ListItemButton,
-	ListItemText,
 	TextField,
+	Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
@@ -74,10 +77,37 @@ export default function SearchPage() {
 					<List>
 						{results.map((result) => (
 							<>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary={result} />
+								<ListItemButton sx={{ p: 0 }}>
+									<Card
+										variant="outlined"
+										sx={{
+											width: "100%",
+										}}>
+										<CardActionArea>
+											<CardContent>
+												<Typography
+													sx={{ fontSize: 14 }}
+													align="right"
+													color="text.secondary"
+													gutterBottom>
+													{result.date}
+												</Typography>
+												<Typography variant="h5" component="div" align="left">
+													{result.name}
+												</Typography>
+												<Typography
+													sx={{ mb: 1.5, fontSize: 14 }}
+													color="text.secondary"
+													align="left">
+													Name | Aadhar Number
+												</Typography>
+												<Typography variant="body2" align="left">
+													{result.content}
+												</Typography>
+											</CardContent>
+										</CardActionArea>
+									</Card>
 								</ListItemButton>
-								<Divider />
 							</>
 						))}
 					</List>

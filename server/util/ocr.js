@@ -3,7 +3,6 @@ const { createWorker, createScheduler } = require("tesseract.js");
 const { fromPath } = require("pdf2pic");
 const sharp = require("sharp");
 const uuid4 = require("uuid4");
-const { addToIndex } = require("./search");
 
 const processPdf = async (path) => {
 	let pdfBufArr = await pdfToImages(path);
@@ -35,9 +34,6 @@ const processPdf = async (path) => {
 		return text;
 	});
 	console.log("Data: ", data);
-
-	// Store data in index
-	addToIndex({ id: uuid4(), content: data.join(" ") });
 
 	return data;
 };
