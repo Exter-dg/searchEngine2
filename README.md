@@ -3,6 +3,7 @@
 ## Setup
 
 - `git clone https://github.com/Exter-dg/searchEngine2.git`
+- Demo: [https://www.awesomescreenshot.com/video/15973020?key=711ade5625df9a645c3fa98ef3aada0e](https://www.awesomescreenshot.com/video/15973020?key=711ade5625df9a645c3fa98ef3aada0e)
 
 ### Terminal 1
 
