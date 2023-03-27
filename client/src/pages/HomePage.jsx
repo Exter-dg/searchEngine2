@@ -51,7 +51,7 @@ export default function HomePage() {
 				minHeight="40vh"
 				maxHeight="65vh">
 				<Grid item xs={12}>
-					<Box sx={{ boxShadow: 3, margin: "1vh" }}>
+					<Box sx={{ boxShadow: 1, margin: "1vh" }}>
 						<Box
 							style={{
 								height: "42vh",
