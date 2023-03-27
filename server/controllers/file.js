@@ -1,4 +1,4 @@
-const { processPdf } = require("../util/helper");
+const { processPdf } = require("../util/ocr");
 
 const fileExtract = async (req, res) => {
 	console.log(req.file);

@@ -1,0 +1,6 @@
+reg {"khushbu":1}
+content.cfg {"doc":0,"opt":1}
+content.map [{"aadhar":["khushbu"]},{"uidai":["khushbu"]},{"patth":["khushbu"]},{"kaoadia":["khushbu"]},{"shukan":["khushbu"]},{"45":["khushbu"]},{"vadodara":["khushbu"]},{"gujarat":["khushbu"]},{}]
+content.ctx [{}]
+content.tag 
+content.store {"khushbu":{"content":"Aadhar UIDAI Patth kaoadia shukan 45 vadodara Gujarat"}}
