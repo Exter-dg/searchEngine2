@@ -23,7 +23,7 @@ export default function SearchPage() {
 			const response = await axios.post("http://localhost:4000/searchIndex", {
 				query: debouncedQuery,
 			});
-			console.log(response.data);
+			setResults(response.data);
 		}
 		fetchResults();
 	}, [debouncedQuery]);
