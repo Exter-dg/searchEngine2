@@ -67,6 +67,7 @@ app.post("/searchIndex", async (req, res) => {
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`);
+	initializeIndex();
 });
 
 // TODO Implement a mechanism for graceful shutdown - to store index before exiting
