@@ -19,7 +19,7 @@ import noResultsJson1 from "../assets/noResults1.json";
 
 export default function SearchPage() {
 	const [query, setQuery] = useState("");
-	const [debouncedQuery] = useDebounce(query, 1000);
+	const [debouncedQuery] = useDebounce(query, 350);
 	const [isSearching, setIsSearching] = useState(false);
 	const [results, setResults] = useState([]);
 
@@ -62,7 +62,7 @@ export default function SearchPage() {
 				<TextField
 					id="input-with-icon-textfield"
 					fullWidth
-					placeholder="Type to start searching"
+					placeholder="Type to start searching..."
 					value={query}
 					onChange={handleChange}
 					InputProps={{
@@ -140,7 +140,16 @@ export default function SearchPage() {
 								}}
 							/>
 						) : (
-							""
+							<Lottie
+								autoplay={false}
+								animationData={loadingJson}
+								style={{
+									width: 500,
+									height: 400,
+									marginLeft: "auto",
+									marginRight: "auto",
+								}}
+							/>
 						)}
 					</List>
 				</Box>

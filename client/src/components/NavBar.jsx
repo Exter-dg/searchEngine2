@@ -104,7 +104,6 @@ export default function NavBar() {
 							))}
 						</Menu>
 					</Box>
-					<AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
 					<Typography
 						variant="h5"
 						noWrap
@@ -114,13 +113,12 @@ export default function NavBar() {
 							mr: 2,
 							display: { xs: "flex", md: "none" },
 							flexGrow: 1,
-							fontFamily: "monospace",
-							fontWeight: 700,
+							fontWeight: 600,
 							letterSpacing: ".3rem",
 							color: "inherit",
 							textDecoration: "none",
 						}}>
-						LOGO
+						SEARCE
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 						{pages.map((page) => (
