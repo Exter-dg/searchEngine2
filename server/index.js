@@ -2,19 +2,6 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const multer = require("multer");
-
-const storage = multer.diskStorage({
-	destination: (req, file, callBack) => {
-		callBack(null, "uploads");
-	},
-	filename: (req, file, callBack) => {
-		callBack(null, `${file.originalname}`);
-	},
-});
-let upload = multer({
-	storage: storage,
-});
 
 const { fileExtract } = require("./controllers/file");
 const { pdfToImages } = require("./util/ocr");
@@ -36,7 +23,7 @@ app.get("/", (req, res) => {
 	res.send("Hello World2!");
 });
 
-app.post("/extractText", upload.single("file"), fileExtract);
+app.post("/extractText", fileExtract);
 
 app.post("/pdf", async (req, res) => {
 	await pdfToImages("./uploads/pdf3page.pdf");

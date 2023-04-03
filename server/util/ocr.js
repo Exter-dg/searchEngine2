@@ -1,11 +1,11 @@
 const { createWorker, createScheduler } = require("tesseract.js");
 // Has 2 external Dependencies - graphicsmagick and ghostscript
-const { fromPath } = require("pdf2pic");
+const { fromBase64 } = require("pdf2pic");
 const sharp = require("sharp");
 const uuid4 = require("uuid4");
 
-const processPdf = async (path) => {
-	let pdfBufArr = await pdfToImages(path);
+const processPdf = async (file) => {
+	let pdfBufArr = await pdfToImages(file);
 	pdfBufArr = await processImage(pdfBufArr);
 	const scheduler = await createTesseractScheduler(3);
 
@@ -109,7 +109,7 @@ const createTesseractWorker = async (scheduler, lang) => {
 	scheduler.addWorker(worker);
 };
 
-const pdfToImages = async (path) => {
+const pdfToImages = async (file) => {
 	const options = {
 		// Increasing density helps in accuracy -
 		// Density is the DPI of image generated
@@ -123,8 +123,9 @@ const pdfToImages = async (path) => {
 	};
 
 	// Convert all pages of the pdf to base64 string
-	const pdfBase64Arr = await fromPath(path, options).bulk(-1, true);
-
+	console.log("File: here: ", file);
+	const pdfBase64Arr = await fromBase64(file, options).bulk(-1, true);
+	console.log("pdfbase64arr", pdfBase64Arr);
 	// Convert base64 string to buffer
 	const pdfBufArr = pdfBase64Arr.map((val) => {
 		return Buffer.from(val.base64, "base64");

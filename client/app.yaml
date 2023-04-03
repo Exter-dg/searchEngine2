@@ -1,0 +1,13 @@
+runtime: nodejs18 # or another supported version
+service: search-doc
+automatic_scaling:
+  min_instances: 1
+  min_idle_instances: 1
+
+handlers:
+  - url: /
+    static_files: build/index.html
+    upload: build/index.html
+  - url: /(.*)$
+    static_files: build/\1
+    upload: build/(.*)

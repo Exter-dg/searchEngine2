@@ -8,10 +8,11 @@ import {
 	Divider,
 } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import loadingJson from "../assets/loading2.json";
 import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
+import FileBase64 from "../components/FileBase64";
 
 export default function HomePage() {
 	const [file, setFile] = useState([]);
@@ -20,21 +21,33 @@ export default function HomePage() {
 	const [page, setPage] = useState(0);
 	const [isSearching, setIsSearching] = useState(false);
 
-	const handleChange = (e) => {
+	const handleChange = async (e) => {
 		if (e.target.files[0] === undefined) return;
 		console.log("File uploaded", e.target.files[0]);
-		setFile((file) => [...file, e.target.files[0]]);
+		const fileBuffer = await e.target.files[0].arrayBuffer();
+		setFile((file) => [...file, fileBuffer]);
 	};
+
+	useEffect(() => {
+		console.log("File: ", file);
+	}, [file]);
 
 	const handleSubmit = async () => {
 		if (file.length === 0) return;
 		setIsSearching(true);
 		const promises = [];
-		file.forEach((val) => {
-			const data = new FormData();
-			console.log("Val: ", val);
-			data.append("file", val);
-			promises.push(axios.post("http://localhost:4000/extractText", data));
+		file.forEach(({ base64: val }) => {
+			// const data = new FormData();
+			console.log("Val: ", val.substr(val.indexOf("base64,") + 7));
+			// data.append("file", val);
+			// var fd = new FormData();
+			// fd.append("json_data", "aadhar.pdf");
+			// fd.append("file", new Blob([val]));
+			promises.push(
+				axios.post("http://localhost:4000/extractText", {
+					file: val.substr(val.indexOf("base64,") + 7),
+				})
+			);
 		});
 		const responses = await Promise.all(promises);
 		responses.forEach((response) => {
@@ -92,7 +105,7 @@ export default function HomePage() {
 				<Grid item xs={12}>
 					<Box
 						style={{
-							overflow: "scroll",
+							overflow: "clip",
 						}}
 						sx={{
 							width: "95%",
@@ -105,7 +118,6 @@ export default function HomePage() {
 							<Lottie
 								loop
 								animationData={loadingJson}
-								play
 								style={{
 									width: 500,
 									height: 300,
@@ -123,16 +135,19 @@ export default function HomePage() {
 									{file[page].name}
 								</Typography>
 								<Divider></Divider>
-								<Typography
-									align="justify"
-									sx={{
-										minHeight: "41vh",
-										maxHeight: "41vh",
-										mt: 2,
-										mb: 2,
-									}}>
-									{fileData[page]}
-								</Typography>
+								<Box sx={{ overflow: "scroll", mb: 2, mt: 2 }}>
+									<Typography
+										align="justify"
+										sx={{
+											minHeight: "38vh",
+											maxHeight: "38vh",
+											mt: 2,
+											mb: 2,
+										}}>
+										{fileData[page]}
+									</Typography>
+								</Box>
+
 								<Box display="flex" justifyContent="center" alignItems="center">
 									<Pagination
 										count={file.length}
@@ -148,12 +163,30 @@ export default function HomePage() {
 								justifyContent="center"
 								flexDirection="column"
 								alignItems="center">
-								<input
+								{/* <input
 									type="file"
 									id="icon-button-file"
 									hidden
 									onChange={handleChange}
+								/> */}
+								<FileBase64
+									type="file"
+									attributes={{ id: "icon-button-file", hidden: true }}
+									multiple={true}
+									onDone={(files) => {
+										// files.forEach(({ name, base64 }) =>
+										// 	setFile([...file, { name, base64 }])
+										// );
+										files = files.map(({ name, base64 }) => {
+											return {
+												name: name,
+												base64: base64,
+											};
+										});
+										setFile([...file, ...files]);
+									}}
 								/>
+
 								<label htmlFor="icon-button-file">
 									<IconButton
 										color="#393e46"

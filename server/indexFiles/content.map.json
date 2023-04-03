@@ -1,1 +1,31 @@
-[{"aadhar":["khushbu"]},{"uidai":["khushbu"]},{"khushbu":["khushbu"]},{"patel":["khushbu"]},{"bharuch":["khushbu"]},{},{},{},{}]
+[
+	{
+		"aadhar": [
+			"khushbu"
+		]
+	},
+	{
+		"uidai": [
+			"khushbu"
+		]
+	},
+	{
+		"khushbu": [
+			"khushbu"
+		]
+	},
+	{
+		"patel": [
+			"khushbu"
+		]
+	},
+	{
+		"bharuch": [
+			"khushbu"
+		]
+	},
+	{},
+	{},
+	{},
+	{}
+]

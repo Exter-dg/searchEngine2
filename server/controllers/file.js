@@ -3,8 +3,8 @@ const { addToIndex } = require("../util/search");
 const uuid4 = require("uuid4");
 
 const fileExtract = async (req, res) => {
-	console.log(req.file);
-	const data = await processPdf(req.file.path);
+	console.log(req.body.file);
+	const data = await processPdf(req.body.file);
 
 	// Store data in index
 	const date = new Date().toUTCString();
@@ -12,7 +12,7 @@ const fileExtract = async (req, res) => {
 		id: uuid4(),
 		content: data.join(" "),
 		date,
-		name: req.file.originalname,
+		name: "File Name",
 	});
 
 	res.status(201).send(data);
